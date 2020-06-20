@@ -1,6 +1,9 @@
+
 # vivado-docker
 
 Vivado installed into a docker image for CI purposes.
+
+This repo and its files were originally forked from the Raytheon BBN-Q repo of the [same name](https://github.com/BBN-Q/vivado-docker), but have modified for use with Vivado 2015.4
 
 ## Build instructions
 

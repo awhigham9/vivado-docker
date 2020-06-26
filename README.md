@@ -3,20 +3,19 @@
 
 Vivado installed into a docker image for CI purposes.
 
-This repo and its files were originally forked from the Raytheon BBN-Q repo of the [same name](https://github.com/BBN-Q/vivado-docker), but have modified for use with Vivado 2015.4
+This repo and its files were originally forked from the Raytheon BBN-Q repo of the [same name](https://github.com/BBN-Q/vivado-docker), but have been modified for use with Vivado 2015.4 and the Zynq-7000 SoC series.
 
 ## Build instructions
 
-1. This docker file assumes the Vivado download is available on a webserver somewhere. This can easily be the build machine using the webserver in Python.
+1. Copy the compressed Vivado tar file into the directory.
     ```shell
-    cd /path/to/Vivado/download
-    python -m http.server
+    cp /path/to/Vivado/download.tar.gz ./
     ```
 2. Copy your Vivado `Xilinx.lic` file into the directory.
 3. Potentialy modify the `install_config.txt` to change the install options.
 4. Build the image (will take about 10 minutes) passing in a build arg
     ```shell
-    docker build --build-arg VIVADO_TAR_HOST=host_ip:8000 --build-arg VIVADO_TAR_FILE=Xilinx_Vivado_SDK_2016.3_1011_1 -t vivado:2016.3 .
+    docker build --build-arg VIVADO_TAR_FILE=Xilinx_Vivado_SDK_Lin_2015.4_1118_2 --build-arg VIVADO_VERSION=2015.4 -t vivado:2015.4 .
     ```
 
 ## Running

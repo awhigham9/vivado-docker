@@ -1,38 +1,40 @@
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 
-MAINTAINER Colm Ryan <cryan@bbn.com>
-
+LABEL maintainer="Andrew Whigham <awhigham9@gmail.com>"
+LABEL description="A Dockerfile to build an Ubuntu 14.04 image with Xilinx Vivado 2015.4 installed"
 # build with docker build --build-arg VIVADO_TAR_HOST=host:port --build-arg VIVADO_TAR_FILE=Xilinx_Vivado_SDK_2016.3_1011_1 -t vivado .
 
 #install dependences for:
-# * downloading Vivado (wget)
 # * xsim (gcc build-essential to also get make)
 # * MIG tool (libglib2.0-0 libsm6 libxi6 libxrender1 libxrandr2 libfreetype6 libfontconfig)
 # * CI (git)
-RUN apt-get update && apt-get install -y \
-  wget \
-  build-essential \
-  libglib2.0-0 \
-  libsm6 \
-  libxi6 \
-  libxrender1 \
-  libxrandr2 \
-  libfreetype6 \
-  libfontconfig \
-  git
+RUN apt-get update
+RUN apt-get install -y build-essential
+RUN apt-get install -y  libglib2.0-0 
+RUN apt-get install -y  libsm6 
+RUN apt-get install -y  libxi6 
+RUN apt-get install -y  libxrender1 
+RUN apt-get install -y  libxrandr2 
+RUN apt-get install -y  libfreetype6 
+RUN apt-get install -y  libfontconfig 
+RUN apt-get install -y  git 
+RUN apt-get install -y  libxtst6
+# 32-bit libraries
+RUN dpkg --add-architecture i386
+RUN apt-get install -y  lib32bz2-1.0
+RUN apt-get install -y lib32z1 
+RUN apt-get install -y lib32ncurses5
+RUN apt-get clean
 
 # copy in config file
 COPY install_config.txt /
 
 # download and run the install
-ARG VIVADO_TAR_HOST
 ARG VIVADO_TAR_FILE
 ARG VIVADO_VERSION
-RUN echo "Downloading ${VIVADO_TAR_FILE} from ${VIVADO_TAR_HOST}" && \
-  wget ${VIVADO_TAR_HOST}/${VIVADO_TAR_FILE}.tar.gz -q && \
-  echo "Extracting Vivado tar file" && \
-  tar xzf ${VIVADO_TAR_FILE}.tar.gz && \
-  /${VIVADO_TAR_FILE}/xsetup --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA --batch Install --config install_config.txt && \
+RUN echo "Adding ${VIVADO_TAR_FILE}.tar.gz"
+ADD ${VIVADO_TAR_FILE}.tar.gz /
+RUN /${VIVADO_TAR_FILE}/xsetup --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA --batch Install --config install_config.txt && \
   rm -rf ${VIVADO_TAR_FILE}*
 #make a Vivado user
 RUN adduser --disabled-password --gecos '' vivado

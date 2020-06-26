@@ -1,0 +1,3 @@
+# Ignore the license file particular to your build
+*.lic
+*.tar.gz

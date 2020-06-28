@@ -24,7 +24,7 @@ This repo and its files were originally forked from the Raytheon BBN-Q repo of t
 ### CLI Only
 To run Vivado in only batch mode, it is sufficient to start the container with
 ``` shell
-podman run -it vivado:2015.4
+docker run -it vivado:2015.4
 ```
 And then launch Vivado with the following option
 ``` shell

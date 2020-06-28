@@ -45,4 +45,4 @@ USER root
 RUN echo "source /opt/Xilinx/Vivado/${VIVADO_VERSION}/settings64.sh" >> ~root/.bashrc
 
 #copy in the license file
-COPY Xilinx.lic ~/root/.Xilinx/
+COPY Xilinx.lic /root/.Xilinx/

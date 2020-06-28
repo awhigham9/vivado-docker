@@ -48,4 +48,3 @@ WORKDIR /home/vivado
 RUN echo "source /opt/Xilinx/Vivado/${VIVADO_VERSION}/settings64.sh" >> /home/vivado/.bashrc
 #copy in the license file
 COPY Xilinx.lic /home/vivado/.Xilinx/
-CMD ["/bin/bash"]
